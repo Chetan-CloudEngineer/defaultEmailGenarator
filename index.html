@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Store Incident Email Generator - ASO</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75'>📡</text></svg>" type="image/svg+xml">
+
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Store Incident Email Generator - ASO</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75'>📡</text></svg>" type="image/svg+xml">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0a0e27 0%, #16213e 50%, #0f3460 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #e0e0e0;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 30px 0;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      background: linear-gradient(135deg, #00d4ff, #0099cc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    }
+
+    .subtitle {
+      color: #00d4ff;
+      font-size: 0.95em;
+      opacity: 0.8;
+    }
+
+    .main-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .form-section {
+      background: rgba(22, 33, 62, 0.6);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+    }
+
+    .form-section h2 {
+      color: #00d4ff;
+      margin-bottom: 25px;
+      font-size: 1.3em;
+      border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+      padding-bottom: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #00d4ff;
+      font-weight: 500;
+      font-size: 0.95em;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 12px 15px;
+      background: rgba(10, 14, 39, 0.8);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: 8px;
+      color: #e0e0e0;
+      font-size: 0.95em;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    select:focus {
+      outline: none;
+      border-color: #00d4ff;
+      background: rgba(10, 14, 39, 0.95);
+      box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+    }
+
+    .incident-types {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .radio-group {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      background: rgba(15, 52, 96, 0.4);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .radio-group:hover {
+      background: rgba(0, 212, 255, 0.1);
+    }
+
+    .radio-group input[type="radio"] {
+      margin-right: 12px;
+      cursor: pointer;
+      accent-color: #00d4ff;
+    }
+
+    .radio-group label {
+      margin: 0;
+      cursor: pointer;
+      flex: 1;
+      color: #e0e0e0;
+    }
+
+    .sub-options {
+      display: none;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(0, 212, 255, 0.2);
+    }
+
+    .sub-options.visible {
+      display: block;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px 20px;
+      background: linear-gradient(135deg, #00d4ff, #0099cc);
+      color: #0a0e27;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .preview-section {
+      background: rgba(22, 33, 62, 0.6);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+    }
+
+    .preview-section h2 {
+      color: #00d4ff;
+      margin-bottom: 20px;
+      font-size: 1.3em;
+      border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+      padding-bottom: 15px;
+    }
+
+    .email-preview {
+      background: rgba(10, 14, 39, 0.8);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 15px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+      line-height: 1.6;
+    }
+
+    .preview-label {
+      color: #00d4ff;
+      font-weight: 600;
+      margin-top: 15px;
+      margin-bottom: 8px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    #previewTo,
+    #previewSubject,
+    #previewBody {
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+
+    .button-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .button-group button {
+      margin: 0;
+      font-size: 0.85em;
+      padding: 12px 15px;
+    }
+
+    .button-group-full {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .button-group-full button {
+      margin: 0;
+      font-size: 0.8em;
+      padding: 10px 12px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #00d4ff, #0099cc);
+      color: #0a0e27;
+      padding: 15px 25px;
+      border-radius: 8px;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+      animation: slideIn 0.3s ease;
+      z-index: 1000;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 1.8em;
+      }
+
+      .button-group-full {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📧 Store Incident Email Generator - ASO</h1>
+      <p class="subtitle">Professional incident notifications for your stores</p>
+    </header>
+
+    <div class="main-content">
+      <!-- Form Section -->
+      <div class="form-section">
+        <h2>Generate Email</h2>
+
+        <!-- Store Number -->
+        <div class="form-group">
+          <label for="storeNumber">Store Number *</label>
+          <input 
+            type="number" 
+            id="storeNumber" 
+            placeholder="Enter store number (e.g., 50, 129, 288)" 
+            min="1" 
+            max="999"
+          >
+        </div>
+
+        <!-- Incident Type Selection -->
+        <div class="form-group">
+          <label>Incident Type *</label>
+          <div class="incident-types">
+            <!-- All Network Down -->
+            <div class="radio-group">
+              <input 
+                type="radio" 
+                id="allDown" 
+                name="incident" 
+                value="all_down" 
+                checked
+              >
+              <label for="allDown">All Network Down</label>
+            </div>
+
+            <!-- Modem/Link Down -->
+            <div class="radio-group">
+              <input 
+                type="radio" 
+                id="modemDown" 
+                name="incident" 
+                value="modem_down"
+              >
+              <label for="modemDown">Modem / Link Down</label>
+            </div>
+
+            <!-- Device Down (New) -->
+            <div class="radio-group">
+              <input 
+                type="radio" 
+                id="deviceDown" 
+                name="incident" 
+                value="device_down"
+              >
+              <label for="deviceDown">Device Down (MX-01/02, Meraki)</label>
+            </div>
+
+            <!-- ISP Link Down -->
+            <div class="radio-group">
+              <input 
+                type="radio" 
+                id="ispDown" 
+                name="incident" 
+                value="isp_down"
+              >
+              <label for="ispDown">ISP Link Down</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modem Sub-Options -->
+        <div class="sub-options" id="modemOptions">
+          <div class="form-group">
+            <label for="modemName">Modem / Link Name *</label>
+            <input 
+              type="text" 
+              id="modemName" 
+              placeholder="e.g., Comcast Modem, Airtel Link"
+            >
+          </div>
+        </div>
+
+        <!-- Device Sub-Options (New) -->
+        <div class="sub-options" id="deviceOptions">
+          <div class="form-group">
+            <label for="deviceName">Device Name *</label>
+            <input 
+              type="text" 
+              id="deviceName" 
+              placeholder="e.g., MX-01, MX-02, Cisco Meraki"
+            >
+          </div>
+        </div>
+
+        <!-- ISP Sub-Options -->
+        <div class="sub-options" id="ispOptions">
+          <div class="form-group">
+            <label for="ispLink">Select ISP Link *</label>
+            <select id="ispLink">
+              <option value="">-- Choose a link --</option>
+              <option value="katy_inet_45761">Katy Internet Link (SID: 45761)</option>
+              <option value="katy_inet_45760">Katy Internet Link (SID: 45760)</option>
+              <option value="katy_austin_p2p_primary">Katy-Austin Primary P2P (CID: 01.PIXX.000083)</option>
+              <option value="katy_austin_p2p_secondary">Katy-Austin Secondary P2P (CID: 01.PIXX.000084)</option>
+              <option value="austin_inet_441126111">Austin Internet Link (CID: 441126111&lt;571188&gt;)</option>
+              <option value="austin_inet_441129133">Austin Internet Link (CID: 441129133&lt;57122&gt;)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Generate Button -->
+        <button onclick="generateEmail()">🔄 Generate Email</button>
+      </div>
+
+      <!-- Preview Section -->
+      <div class="preview-section">
+        <h2>Email Preview</h2>
+
+        <div class="preview-label">📧 To:</div>
+        <div class="email-preview" id="previewTo">Click Generate to see email recipients</div>
+
+        <div class="preview-label">📝 Subject:</div>
+        <div class="email-preview" id="previewSubject">Click Generate to see subject</div>
+
+        <div class="preview-label">📄 Body:</div>
+        <div class="email-preview" id="previewBody">Click Generate to see email body</div>
+
+        <div class="button-group-full">
+          <button onclick="copyTo()">📧 Copy To</button>
+          <button onclick="copySubject()">📝 Copy Subject</button>
+          <button onclick="copyBody()">📄 Copy Body</button>
+          <button onclick="copyAll()">📋 Copy All</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle sub-options based on incident type
+    document.querySelectorAll('input[name="incident"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        document.getElementById('modemOptions').classList.remove('visible');
+        document.getElementById('deviceOptions').classList.remove('visible');
+        document.getElementById('ispOptions').classList.remove('visible');
+
+        if (this.value === 'modem_down') {
+          document.getElementById('modemOptions').classList.add('visible');
+        } else if (this.value === 'device_down') {
+          document.getElementById('deviceOptions').classList.add('visible');
+        } else if (this.value === 'isp_down') {
+          document.getElementById('ispOptions').classList.add('visible');
+        }
+
+        // Don't call generateEmail() on radio change - only show options
+      });
+    });
+
+    // ISP Link dropdown change handler - removed generateEmail() call
+    document.getElementById('ispLink').addEventListener('change', function() {
+      // Only allow dropdown selection, don't generate yet
+    });
+
+    // Generate Email Function
+    function generateEmail() {
+      const storeNumber = document.getElementById('storeNumber').value;
+      const incidentType = document.querySelector('input[name="incident"]:checked').value;
+
+      // Validation - Skip store number validation for ISP links
+      if (!storeNumber && incidentType !== 'isp_down') {
+        showErrorPopup('⚠️ Please enter Store Number');
+        return;
+      }
+
+      let emailTo = `"Store${storeNumber}All" <Store${storeNumber}All@academy.com>; "Store${storeNumber}Managers" <Store${storeNumber}Managers@academy.com>; "Store${storeNumber}Director" <Store${storeNumber}Director@academy.com>; "store${storeNumber}" <store${storeNumber}@academy.com>; "Store${storeNumber}Ops" <Store${storeNumber}Ops@academy.com>`;
+      let subject = '';
+      let body = '';
+
+      if (incidentType === 'all_down') {
+        // All Network Down
+        subject = `Store ${storeNumber} || All Network Down || Urgent Action Required`;
+        body = `Hi Team,
+
+We have observed that all network links are down at the store ${storeNumber} and we need your assistance to reboot the modem.
+
+Go to Electrical Room—-> Locate Comcast Modem—-> Plug out the power cable, wait for 15 seconds and plug-in the cable.
+
+Kindly share the available contact to troubleshoot further.`;
+
+      } else if (incidentType === 'modem_down') {
+        // Modem/Link Down
+        const modemName = document.getElementById('modemName').value;
+        if (!modemName) {
+          showErrorPopup('⚠️ Please enter Modem / Link Name');
+          return;
+        }
+
+        subject = `Store ${storeNumber} || ${modemName} down and having huge packet loss`;
+        body = `Hi Team,
+
+We have observed that the network link "${modemName}" is down at the store ${storeNumber} and we need your assistance to reboot the modem.
+
+Go to Electrical Room—-> Locate ${modemName}—-> Plug out the power cable, wait for 15 seconds and plug-in the cable.
+
+Kindly share the available contact to troubleshoot further.`;
+
+      } else if (incidentType === 'device_down') {
+        // Device Down (New)
+        const deviceName = document.getElementById('deviceName').value;
+        if (!deviceName) {
+          showErrorPopup('⚠️ Please enter Device Name');
+          return;
+        }
+
+        subject = `Store ${storeNumber} || Device "${deviceName}" is Down || Please check the device is powered up status`;
+        body = `Hi Team,
+
+We have observed that the network device "${deviceName}" is down. Please check if the device is powered up.
+
+Follow these steps:
+Go to the IT room.
+Locate the Cisco Meraki device labelled as "${deviceName}".
+Verify the power indications on the device.
+
+Kindly share the available store MOD contact to troubleshoot the issue further.`;
+
+      } else if (incidentType === 'isp_down') {
+        // ISP Link Down
+        const ispLink = document.getElementById('ispLink').value;
+        if (!ispLink) {
+          showErrorPopup('⚠️ Please select an ISP Link');
+          return;
+        }
+
+        emailTo = 'support@switch.com';
+        
+        // ISP Link data
+        const ispData = {
+          katy_inet_45761: {
+            subject: 'Katy Internet Link Down – Service ID 45761',
+            body: 'Hi Switch Support,\n\nWe are observing that the Katy Internet link on device KTY-INET-C9500-EXT-SW-VSK (IP: 10.1.50.16, Interface: Twe1/0/2) is down. Kindly investigate and advise.\n\nService ID: 45761\nSecurity Code: 7Bk0Vz2Hrc97aZG'
+          },
+          katy_inet_45760: {
+            subject: 'Katy Internet Link Down – Service ID 45760',
+            body: 'Hi Switch Support,\n\nWe are observing that the Katy Internet link on device KTY-INET-C9500-EXT-SW-VSK (IP: 10.1.50.16, Interface: Twe2/0/2) is down. Kindly investigate and advise.\n\nService ID: 45760\nSecurity Code: 7Bk0Vz2Hrc97aZG'
+          },
+          katy_austin_p2p_primary: {
+            subject: 'Katy–Austin Primary P2P Link Down – CID 01.PIXX.000083',
+            body: 'Hi Switch Support,\n\nWe are observing that the Katy to Austin Primary P2P link is currently down. Kindly assist in investigating the issue.\n\nCircuit ID: 01.PIXX.000083\nSecurity Code: 7Bk0Vz2Hrc97aZG'
+          },
+          katy_austin_p2p_secondary: {
+            subject: 'Katy–Austin Secondary P2P Link Down – CID 01.PIXX.000084',
+            body: 'Hi Switch Support,\n\nWe are observing that the Katy to Austin Secondary P2P link is currently down. Kindly assist in investigating the issue.\n\nCircuit ID: 01.PIXX.000084\nSecurity Code: 7Bk0Vz2Hrc97aZG'
+          },
+          austin_inet_441126111: {
+            subject: 'Austin Internet Link Down – Cir ID 441126111<571188>',
+            body: 'Hi Switch Support,\n\nWe are observing that the Austin Internet link on device AUS-INE-VSS (IP: 10.128.0.11, Interface: Twe1/0/1) is down. Kindly investigate and advise.\n\nCircuit ID: 441126111<571188>'
+          },
+          austin_inet_441129133: {
+            subject: 'Austin Internet Link Down – Cir ID 441129133<57122>',
+            body: 'Hi Switch Support,\n\nWe are observing that the Austin Internet link on device AUS-INE-VSS (IP: 10.128.0.11, Interface: Twe2/0/1) is down. Kindly investigate and advise.\n\nCircuit ID: 441129133<57122>'
+          }
+        };
+
+        subject = ispData[ispLink].subject;
+        body = ispData[ispLink].body;
+      }
+
+      // Update preview
+      document.getElementById('previewTo').textContent = emailTo;
+      document.getElementById('previewSubject').textContent = subject;
+      document.getElementById('previewBody').textContent = body;
+    }
+
+    // Copy Functions
+    function copyTo() {
+      const text = document.getElementById('previewTo').textContent;
+      copyToClipboard(text, '✓ Copied To!');
+    }
+
+    function copySubject() {
+      const text = document.getElementById('previewSubject').textContent;
+      copyToClipboard(text, '✓ Copied Subject!');
+    }
+
+    function copyBody() {
+      const text = document.getElementById('previewBody').textContent;
+      copyToClipboard(text, '✓ Copied Body!');
+    }
+
+    function copyAll() {
+      const to = document.getElementById('previewTo').textContent;
+      const subject = document.getElementById('previewSubject').textContent;
+      const body = document.getElementById('previewBody').textContent;
+      const fullEmail = `To:\n${to}\n\nSubject:\n${subject}\n\nBody:\n${body}`;
+      copyToClipboard(fullEmail, '✓ Copied All!');
+    }
+
+    function copyToClipboard(text, message) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(message);
+      }).catch(() => {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast(message);
+      });
+    }
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2000);
+    }
+
+    function showErrorPopup(message) {
+      const backdrop = document.createElement('div');
+      backdrop.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        animation: fadeIn 0.3s ease;
+      `;
+
+      const popup = document.createElement('div');
+      popup.style.cssText = `
+        background: linear-gradient(135deg, #ff6b6b, #ff8787);
+        padding: 40px;
+        border-radius: 20px;
+        color: white;
+        font-size: 1.2em;
+        font-weight: 600;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(255, 107, 107, 0.4), 0 0 40px rgba(255, 107, 107, 0.3);
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        transform: scale(0.8);
+        animation: popupEnter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        max-width: 400px;
+        word-wrap: break-word;
+      `;
+
+      popup.textContent = message;
+
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes popupEnter {
+          0% { 
+            transform: scale(0.3) rotateX(90deg);
+            opacity: 0;
+          }
+          50% {
+            transform: scale(1.1);
+          }
+          100% { 
+            transform: scale(1) rotateX(0deg);
+            opacity: 1;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+
+      backdrop.appendChild(popup);
+      document.body.appendChild(backdrop);
+
+      // Close on click
+      backdrop.addEventListener('click', function(e) {
+        if (e.target === backdrop) {
+          backdrop.style.animation = 'fadeIn 0.3s ease reverse';
+          setTimeout(() => backdrop.remove(), 300);
+        }
+      });
+
+      // Auto close after 4 seconds
+      setTimeout(() => {
+        if (backdrop.parentNode) {
+          backdrop.style.animation = 'fadeIn 0.3s ease reverse';
+          setTimeout(() => backdrop.remove(), 300);
+        }
+      }, 4000);
+    }
+
+  </script>
+</body>
+</html>
