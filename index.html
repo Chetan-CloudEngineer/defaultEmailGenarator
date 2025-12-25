@@ -473,11 +473,15 @@
         subject = `Store ${storeNumber} || All Network Down || Urgent Action Required`;
         body = `Hi Team,
 
-We have observed that all network links are down at the store ${storeNumber} and we need your assistance to reboot the modem.
+We have observed that all network devices at ${storeNumber} are currently unreachable.
 
-Go to Electrical Room—-> Locate Comcast Modem—-> Plug out the power cable, wait for 15 seconds and plug-in the cable.
+Request you to kindly:
 
-Kindly share the available contact to troubleshoot further.`;
+    Check the Power/APC units.
+    Verify the physical status of all network devices.
+    Share the available onsite contact for further coordination.
+    
+Thank you for your support.`;
 
       } else if (incidentType === 'modem_down') {
         // Modem/Link Down
